@@ -1,0 +1,84 @@
+
+
+<------ SOLID PRINCIPLES ------> 
+
+Advantage -> 
+
+i.   Avoid Duplicate Code 
+ii.  Easy to Maintain 
+iii. Flexible Code 
+ 
+
+S -> Sinlge Responsibilty Principle 
+O -> Open / Closed Principle
+L -> Liskov Substitution Principle 
+I -> Interface Segmented Principle
+D -> Dependency Inversion Principle 
+
+
+1. SINGLE RESPONSIBILITY PRINCIPLE -> 
+A class should have only one reason to change i.e. a class should have only one job . 
+
+
+class SmartPhone{
+    String company ;
+    String modelNo ;
+    int MRP ;
+    SmartPhone(String company , String modelNo , int MRP){
+        this.company = company ;
+        this.modelNo = modelNo ;
+        this.MRP = MRP ;
+    }
+
+}
+
+class Bill{
+    private SmartPhone smartPhone ;
+    private int quantity ;
+    public static int billNumber = 0 ;
+    private int currentBillNumber ;
+    Bill(SmartPhone smartPhone , int quantity){
+        this.quantity = quantity ;
+        this.smartPhone = smartPhone ;
+        this.currentBillNumber = billNumber ;
+    }
+    public double generateBill(){
+        return this.smartPhone.MRP * this.quantity - (0.1 * this.smartPhone.MRP);
+    }
+    public void saveBillToDB(){
+        System.out.println("Saved Bill To DB");
+    }
+}
+
+Here there are multiple jobs in the Bill class as it is generating bill amount and saving it to the DB as well.
+
+Solution as per Sinlge Responsibilty Principle... ->
+
+class Bill{
+    private SmartPhone smartPhone ;
+    private int quantity ;
+    public static int billNumber = 0 ;
+    private int currentBillNumber ;
+    Bill(SmartPhone smartPhone , int quantity){
+        this.quantity = quantity ;
+        this.smartPhone = smartPhone ;
+        this.currentBillNumber = billNumber ;
+    }
+    public double generateBill(){
+        return this.smartPhone.MRP * this.quantity - (0.1 * this.smartPhone.MRP);
+    }
+    
+}
+
+
+class DAO{
+    Bill bill ; 
+    DAO(Bill bill){
+        this.bill = bill ; 
+    }
+    public void saveBillToDB(){
+        System.out.println("Saved Bill To DB");
+    }
+}
+
+Here there are two classes having different jobs one is to generateBill and Other is to save Bill TO DB . 
