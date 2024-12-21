@@ -17,6 +17,7 @@ D -> Dependency Inversion Principle
 
 
 1. SINGLE RESPONSIBILITY PRINCIPLE -> 
+
 A class should have only one reason to change i.e. a class should have only one job . 
 
 
@@ -82,3 +83,56 @@ class DAO{
 }
 
 Here there are two classes having different jobs one is to generateBill and Other is to save Bill TO DB . 
+
+2. Open / Closed Principle ...->
+Classed should be open for extension but not for modifications.  
+
+class DAO{
+    Bill bill ;
+    DAO(Bill bill){
+        this.bill = bill ;
+    }
+    public void saveBillToDB(){
+        System.out.println("Saved Bill To DB");
+    }   
+}
+
+Here what we also want to save to add a new method to saveToFile as well ; 
+ 
+class DAO{
+    Bill bill ;
+    DAO(Bill bill){
+        this.bill = bill ;
+    }
+    public void saveBillToDB(){
+        System.out.println("Saved Bill To DB");
+    }
+    public void saveBillToFile(){
+        System.out.println("Save Bill To File");
+    }
+}
+
+Here we have to modify our DAO class and it also is having two Responsibilties which is not good according 
+to our SOLID Principles . 
+
+So we have to extend it in such a way is follows SOLID. 
+
+interface saveBill{
+    void saveBill(Bill bill) ;
+}
+
+class DataBaseSave implements saveBill{
+    @Override
+    public void saveBill(Bill bill) {
+        System.out.println("Saved Bill To DB");
+    }
+}
+
+class FileSave implements saveBill{
+    @Override
+    public void saveBill(Bill bill) {
+        System.out.println("Save Bill To File");
+    }
+}
+
+Here the saveBill interface is open for extension and adding different methods to save.
