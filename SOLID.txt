@@ -136,3 +136,49 @@ class FileSave implements saveBill{
 }
 
 Here the saveBill interface is open for extension and adding different methods to save.
+
+3. Liskov Substitution Principle 
+
+Objects of a superclass can be replaced with objects of its subclasses without altering the program's correctness.
+
+The subclasses should extend more properties from the parent class rather than narrow it down. 
+
+class PaymentProcessor{
+    public void processPayment(double amount){
+        System.out.println("Processing a payment "+ amount);
+    }
+}
+class creditCardPaymentProcessor extends PaymentProcessor{
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing a Credit Card Payment" + amount );
+    }
+}
+class cryptoCurrencyPaymentProcessor extends PaymentProcessor{
+    @Override
+    public void processPayment(double amount) {
+        throw new UnsupportedOperationException("Crypto Payment processor is under Maintenance");
+    }
+}
+
+Here the cryptoCurrencyPaymentProcessor classes's method processPayment is narrowing down the parent classes's 
+properties which is not good. 
+
+abstract class PaymentProcessor{
+    public abstract void processPayment(double amount) ;
+}
+class creditCardPaymentProcessor extends PaymentProcessor{
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing a Credit Card Payment" + amount );
+    }
+}
+class cryptoCurrencyPaymentProcessor extends PaymentProcessor{
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing a Crypto Currency Payment" + amount );
+    }
+}
+
+Here cryptoCurrencyPaymentProcessor method processPayment handles the payment in a better way.  
+
