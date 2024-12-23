@@ -84,7 +84,7 @@ class DAO{
 
 Here there are two classes having different jobs one is to generateBill and Other is to save Bill TO DB . 
 
-2. Open / Closed Principle ...->
+2. OPEN / CLOSED PRINCIPLE ...->
 Classed should be open for extension but not for modifications.  
 
 class DAO{
@@ -137,7 +137,7 @@ class FileSave implements saveBill{
 
 Here the saveBill interface is open for extension and adding different methods to save.
 
-3. Liskov Substitution Principle 
+3. LISKOV SUBSTITUTION PRINCIPLE 
 
 Objects of a superclass can be replaced with objects of its subclasses without altering the program's correctness.
 
@@ -182,3 +182,61 @@ class cryptoCurrencyPaymentProcessor extends PaymentProcessor{
 
 Here cryptoCurrencyPaymentProcessor method processPayment handles the payment in a better way.  
 
+4. INTERFACE SEGREGATION PRINCIPLE ...-> 
+
+A class should not implement the methods (interface) it dose not use . 
+
+interface bike{
+    void startEngine() ; 
+    void repairWheels() ; 
+}
+
+class MotorBike implements bike{
+    @Override
+    public void startEngine() {
+        //engine started
+    }
+    @Override
+    public void repairWheels() {
+       //start wheel repair
+    }
+}
+
+class Bicycle implements bike{
+    @Override
+    public void startEngine() {
+        //No need as there is on engine
+    }
+    @Override
+    public void repairWheels() {
+        //start wheel repair
+    }
+}
+
+Here the Bicycle class doesnt need the startEngine method as there is no engine in the Bicycle. 
+
+interface bikeWithEngine{
+    void startEngine() ;
+}
+interface bikeRepairWheels{
+    void repairWheels() ;
+}
+class MotorBike implements bikeWithEngine , bikeRepairWheels{
+    @Override
+    public void startEngine() {
+        //engine started
+    }
+    @Override
+    public void repairWheels() {
+       //start wheel repair
+    }
+}
+class Bicycle implements bikeRepairWheels{
+    @Override
+    public void repairWheels() {
+        //start wheel repair
+    }
+}
+
+Here we can create two different interfaces just to make sure that there is no need to implements the 
+startEngine method.
