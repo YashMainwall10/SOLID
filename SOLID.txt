@@ -240,3 +240,37 @@ class Bicycle implements bikeRepairWheels{
 
 Here we can create two different interfaces just to make sure that there is no need to implements the 
 startEngine method.
+
+5. DEPENDENCY INVERSION PRINCIPLE ...-> 
+
+Classes should depend upon interfaces(abstraction) rather than concrete classes. 
+
+interface Keyboard{
+    //Some functions
+}
+class WiredKeyBoard implements Keyboard{
+   
+}
+class BlueToothKeyBoard implements Keyboard{
+
+}
+class Macbook{
+    private WiredKeyBoard keyBoard ;
+    Macbook(){
+        this.keyBoard = new WiredKeyBoard() ;
+    }
+}
+
+Here what if we need to change it to BlueToothKeyBoard in Macbook class we cannot as it will break the previous 
+objects. 
+
+class Macbook{
+    private Keyboard keyBoard ;
+    Macbook(Keyboard keyBoard){
+        this.keyBoard = keyBoard;
+    }
+}
+Here we can change the Macbook class like this and we can pass the type of Keyboard we want. 
+Our class is Depended on interfaces rather than concrete classes.
+
+
