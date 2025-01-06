@@ -1,0 +1,89 @@
+
+
+
+class Vehicle{
+    public void drive(){
+        //Normal Drive Function
+    }
+}
+
+class SportsCar extends Vehicle{
+    @Override
+    public void drive() {
+        //Sports drive mode
+    }
+}
+class Sedan extends Vehicle{
+    @Override
+    public void drive(){
+        // Smooth Drive mode
+    }
+}
+class HatchBack extends Vehicle{
+    @Override
+    public void drive(){
+        // Smooth Drive mode
+    }
+}
+
+
+<--- Problem--->
+In class Sedan and HatchBack there is reuse of code and suppose we have to introduce another class with same implementation of drive method than 
+we write it again and again . 
+
+
+<---Solution--->
+
+
+//startergy 
+
+interface DriveType{
+    void drive() ;
+}
+
+class NormalDrive implements DriveType{
+    @Override
+    public void drive() {
+        //Normal Drive;
+    }
+}
+
+class SportsDrive implements DriveType{
+    @Override
+    public void drive() {
+        //Sports Drive;
+    }
+}
+
+class Vehicle{
+    DriveType driveType ;
+    Vehicle(DriveType driveType){
+        this.driveType = driveType ;
+    }
+    void drive(){
+        this.driveType.drive() ;
+    }
+}
+
+class SportsCar extends Vehicle{
+    SportsCar(){
+        super(new SportsDrive());
+    }
+}
+class Sedan extends Vehicle{
+    Sedan(){
+        super(new NormalDrive());
+    }
+}
+class HatchBack extends Vehicle{
+    HatchBack(){
+        super(new NormalDrive());
+    }
+}
+
+Here we have created a stratergy (interface) for the classes and will create an object of that interface in the base class.
+The base class constructor will recieve an object of the desired type for the sub class.
+
+And when we call for the drive method for any child class it smartly call the method of the desired interface.
+
+Whenever we want to add a new class or a new drive method we will just create another class for the desired method. 
